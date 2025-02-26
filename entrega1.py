@@ -162,13 +162,7 @@ def main():
             nextStates.append(getNextState(pair, alphabet, transitionMatrix))
 
         i+=1 #Actualizamos var
-        
-
-
-
-
 
 if __name__=="__main__":
     main()
-
     
