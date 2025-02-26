@@ -1,13 +1,19 @@
-**Student's full name:** Laura Indabur Garcia and Daniela Salazar Amaya
-**Student's class number:** 7308
-**Operating system:** Windows 11
-**Programming language:** python 3.12.7
+**Student's full name:** Laura Indabur Garcia and Daniela Salazar Amaya   
+
+**Student's class number:** 7308   
+
+**Operating system:** Windows 11    
+
+**Programming language:** python 3.12.7   
+
 **Tools used:**
   - NumPy library
   - The combinations and zip_longest functions from the itertools module
     
 **Instructions to run the code:** If you want to run our code, you just have to make sure you have already installed the NumPy library.
+
 **Description of our algorithm:** Main function: Show you which states are equivalent in a DFA.
+
 **Explanation of the algorithm:**
 This algorithm, based on the DFA data provided by the user, creates a state matrix equivalent to the transition table of a DFA. The difference is that, in this matrix, the column corresponding to the states (q) is represented by the row index, storing only the columns of the alphabet.
 
