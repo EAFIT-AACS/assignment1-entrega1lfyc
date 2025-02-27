@@ -52,48 +52,19 @@ def eliminarMarcados(combination, finalStates):
     return unmarkedStates, markedStates  #por ahora retornamos ambos, en el main dividimos para siguiente funcion tomar solo unmarkedStates
 
 
-"""Con esta función obtendremos los diferentes estados a los que pueden ir p y q, en (p,q) (tupla de estados) bajo sus respectivos alfabetos.
-Parametros:
-    pair -> tupla de estados
-    alfabeto -> alfabeto del DFA
-    transitionMatrix -> Matriz con tabla de transicion del DFA
-    Retorna: nextTuplePyQ -> lista con el conjunto de tuplas que contienen los diferentes estados a los que podemos ir desde p o q, bajo su 
-    alfabeto, es decir, es la unión de los posibles estados de cada una"""
-def getNextState(pair, alfabeto, transitionMatrix):
-    nextStatesPerSymbol = []  # Lista para almacenar las transiciones para cada símbolo del alfabeto
-    
-    for i in range(len(alfabeto)):  # Recorremos cada símbolo del alfabeto
-        nextTuple = []  # Lista para almacenar los estados siguientes bajo el mismo símbolo
-        
-        for p in pair:  # Para cada estado en la pareja
-            nextState = int(transitionMatrix[p, i])  # Obtenemos el estado siguiente de la matriz de transición
-            nextTuple.append(nextState)
-        
-        nextStatesPerSymbol.append(tuple(nextTuple))  # Convertimos en tupla y añadimos a la lista
-    
-    #print(f"Estados siguientes para {pair}: {nextStatesPerSymbol}")
-    return nextStatesPerSymbol
-
-"""Con esta función lo que haremos será agrupar los diferentes estados a los que puede ir una tupla bajo su alfabeto, esto por medio de zip_longest
-de Itertool, el cual es un metodo que nos permite agrupar en bloques de n tamaño, que en nuestro caso será de a 2 elementos para crear tuplas, esto 
-creando 2 referencias a un iterador (que iterara sobre la tupla), pasandoselos a zip_longest para que vaya recorriendo el iterable con estos, y los 
-vaya agrupando de a 2 elementos.
-Parametros: 
-    Iterable -> será la lista de combinaciones
-Retorna: nextStatePyQ -> lista de los estados a los que pueden ir, tanto p como q, bajo sus respectivos alfabetos."""
-
-def grouper(iterable, fillvalue=None):
-    #fillvalue es el valor de relleno cuando no hay suficientes elementos para crear un grupo
-    args=[iter(iterable)] * 2 #Creamos una lista de n=2 referencias al mismo iterador, que creamos para el parametro Iterable, 2 porque siempre obtendremos tuplas
-    nextStatePyQ=zip_longest(*args,fillvalue=fillvalue) #con zip_longest agrupamos las valores en tuplas, pues este toma uno por uno (pues los desempaquetamos con *)los elementos de args hasta completar n elementos, y como son la misma referencia (los iterabores) el siguiente avanza donde termino el anterior, recorriendo asi el iterable.
-    return nextStatePyQ
-
 """Con esta función lo que haremos será reducir los estados equivalentes, es decir, los que tienen la misma transición bajo el mismo símbolo del alfabeto.
 iniciara a  recorrer los estados no marcados, y para cada uno de estos, obtendremos los estados a los que puede ir bajo cada símbolo, los agruparemos en tuplas, 
 para saacar los esatdos equivalentes (tienen la misma transición bajo el mismo símbolo del alfabeto), y los marcaremos, eliminando los que no lo sean.
 Retorna: unmarkedStates -> lista de los estados equivalentes que quedan después de la reducción."""
 
 def reducirEstados(unmarkedStates, markedStates, alphabet, transitionMatrix):
+    """Con esta función obtendremos los diferentes estados a los que pueden ir p y q, en (p,q) (tupla de estados) bajo sus respectivos alfabetos.
+    Parametros:
+        pair -> tupla de estados
+        alfabeto -> alfabeto del DFA
+        transitionMatrix -> Matriz con tabla de transicion del DFA
+        Retorna: nextState -> lista con el conjunto de tuplas que contienen los diferentes estados a los que podemos ir desde p o q, bajo su
+        alfabeto, es decir, es la unión de los posibles estados de cada una"""
     def getNextState(pair, alphabet, transitionMatrix):  # Función anidada nos ayuda a conseguir los estados siguientes de una pareja
         """Retorna los siguientes estados de una pareja bajo cada símbolo del alfabeto."""
         nextStates = []
@@ -126,9 +97,6 @@ def main():
     i=0
     f=open("dfa.txt","a") #Abrimos fichero dfa en modo append, para que no se sobreescriban los datos
     f.write(f"\nNúmero de casos: {casesNumber}")
-    statesNumber=0 #la definimos por fuera para que sea variable global, porque después la necesitamos
-    finalStates=0
-    transitionMatrix = []
     global alphabet
     while(i<casesNumber):
         #OBTENEMOS DATOS
@@ -153,10 +121,6 @@ def main():
         markedStates = list(estadosAgrupados[1])
         equivalentes = reducirEstados(unmarkedStates, markedStates, alphabet, transitionMatrix)
         print(equivalentes)
-
-        nextStates=[]  #Es la  lista para los estados siguientes de cada par con ella podemos crear la reducción e implementarla
-        for pair in unmarkedStates:
-            nextStates.append(getNextState(pair, alphabet, transitionMatrix))
 
         i+=1 #Actualizamos var
 
