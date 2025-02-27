@@ -1,9 +1,6 @@
 from itertools import combinations
 from itertools import zip_longest
 import numpy as np #Usamos numpy 2.2.2 
-"""from typing import final
-from nltk.ccg.lexicon import nextCategory
-from numpy.ma.core import transpose"""
 
 """Función con la que llenaremos la matriz de transición, la cual tendrá como número de filas, el tamaño del alfabeto, y el index i de esta será el 
 estado q en una tabla de transicion, es decir, este no estará almacenado textualmente en la matriz.
