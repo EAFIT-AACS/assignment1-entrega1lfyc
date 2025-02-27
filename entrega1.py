@@ -1,6 +1,6 @@
 from itertools import combinations
 from itertools import zip_longest
-import numpy as np #Usamos numpy 2.2.2
+import numpy as np #Usamos numpy 2.2.2 
 """from typing import final
 from nltk.ccg.lexicon import nextCategory
 from numpy.ma.core import transpose"""
